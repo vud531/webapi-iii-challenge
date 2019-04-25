@@ -5,41 +5,40 @@ const Database = require('../data/helpers/' + model + 'Db.js')
 
 const router = express.Router()
 
+sendError500Message = (res, message) => {
+  res.status(500).json({
+    message: message
+  })
+}
+sendError404Message = (res, message) => {
+  res.status(404).json({
+    message: message
+  })
+}
+
 router.get('/', async (req, res) => {
     try {
         const result = await Database.get()
         res.status(200).json(result)
     } catch (err) {
         console.log(err)
-        res.status(500).json({
-            message: 'Error retrieving data'
-        })
+        sendError500Message(res, err)
     }
 })
 
 router.get('/:id', async (req, res) => {
     try {
         const result = await Database.getById(req.params.id)
-        res.status(200).json(result)
+        if (result) {
+          res.status(200).json(result)
+        } else {
+          sendError404Message(res, 'post not found')        
+        }
     } catch (err) {
         console.log(err)
-        res.status(500).json({
-            message: 'Error retrieving data'
-        })
+        sendError500Message(res, err)
     }
 })
-
-// GET /api/posts/123/messages
-router.get('/:id/messages', (req, res) => {
-    Posts.ge(req.params.id)
-    .then(messages => {
-    res.status(200).json(messages);
-    })
-    .catch(err => {
-    res.status(500).json(err);
-    });
-});
-
 
 
 router.post('/', async (req, res) => {
@@ -49,9 +48,7 @@ router.post('/', async (req, res) => {
   } catch (error) {
     // log error to database
     console.log(error);
-    res.status(500).json({
-      message: 'Error adding the post',
-    });
+    sendError500Message(res, err)
   }
 });
 
@@ -66,9 +63,7 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     // log error to database
     console.log(error);
-    res.status(500).json({
-      message: 'Error removing the post',
-    });
+    sendError500Message(res, err)
   }
 });
 
@@ -83,9 +78,7 @@ router.put('/:id', async (req, res) => {
   } catch (error) {
     // log error to database
     console.log(error);
-    res.status(500).json({
-      message: 'Error updating the post',
-    });
+    sendError500Message(res, err)
   }
 });
 
