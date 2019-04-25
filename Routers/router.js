@@ -1,7 +1,7 @@
-const express = require(express);
+const express = require('express');
 
-const model = ''
-const Database = require('./')
+const model = 'user'
+const Database = require('../data/helpers/' + model + 'Db.js')
 
 const router = express.Router()
 
@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.remove('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const count = await Database.remove(req.params.id);
     if (count > 0) {
@@ -89,9 +89,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-
-// add an endpoint that returns all the messages for a post
-// add an endpoint for adding new message to a post
 
 module.exports = router;
 
