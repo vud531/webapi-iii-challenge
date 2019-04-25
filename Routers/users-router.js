@@ -30,7 +30,17 @@ router.get('/:id', async (req, res) => {
 })
 
 
-
+router.get('/:id/posts', async (req, res) => {
+  try {
+    const result = await Database.getUserPosts(req.params.id)
+    res.status(200).json(result)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({
+        message: 'Error retrieving data'
+    })
+  }
+})
 
 
 router.post('/', async (req, res) => {
