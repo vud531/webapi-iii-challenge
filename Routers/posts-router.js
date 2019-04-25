@@ -1,6 +1,6 @@
 const express = require('express');
 
-const model = 'user'
+const model = 'post'
 const Database = require('../data/helpers/' + model + 'Db.js')
 
 const router = express.Router()
@@ -91,4 +91,9 @@ router.put('/:id', async (req, res) => {
 
 
 module.exports = router;
+
+
+
+
+
 
