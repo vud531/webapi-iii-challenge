@@ -1,5 +1,6 @@
-const express = require('express');
+// import  * as Responder from './helper-methods/helperMethods'
 
+const express = require('express');
 const model = 'post'
 const Database = require('../data/helpers/' + model + 'Db.js')
 
